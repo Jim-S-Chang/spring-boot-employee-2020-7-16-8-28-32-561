@@ -4,6 +4,9 @@ import com.thoughtworks.springbootemployee.dto.EmployeeDTO;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,18 +22,16 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/employees")
-    public List<Employee> getEmployees() {
-        return employeeService.getAllEmployees();
+    public Page getEmployees(@PageableDefault Pageable pageable,@RequestParam(defaultValue = "false") boolean unpaged) {
+        if (unpaged) {
+            return employeeService.getAllEmployees(Pageable.unpaged());
+        }
+        return employeeService.getAllEmployees(pageable);
     }
 
     @GetMapping(path = "/employees", params = "gender")
     public List<Employee> getEmployees(@RequestParam String gender) {
         return employeeService.getEmployeesByGender(gender);
-    }
-
-    @GetMapping(path = "/employees", params = "page, pageSize")
-    public List<Employee> getEmployees(@RequestParam int page, int pageSize) {
-        return employeeService.getEmployeesByPage(page, pageSize);
     }
 
     @GetMapping(path = "/employees/{id}")

@@ -6,6 +6,8 @@ import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,11 +28,6 @@ public class EmployeeServiceImp implements EmployeeService{
         employee.setCompany(company);
         employeeRepository.save(employee);
         return true;
-    }
-
-    @Override
-    public List<Employee> getEmployeesByPage(int page, int pageSize) {
-        return null;
     }
 
     @Override
@@ -57,11 +54,12 @@ public class EmployeeServiceImp implements EmployeeService{
 
     @Override
     public boolean deleteEmployeeById(int id) {
-        return false;
+        employeeRepository.deleteById(id);
+        return true;
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
+    public Page getAllEmployees(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
 }
