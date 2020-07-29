@@ -4,8 +4,10 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -24,15 +26,12 @@ public class CompanyController {
         return companyService.addCompany(company);
     }
 
-    // todo
     @GetMapping(path = "/companies")
-    public List<Company> getCompaniesByPage(
-            @RequestParam(required = false, defaultValue = "-1") int page,
-            @RequestParam(required = false, defaultValue = "5") int pageSize) {
-        if (page == -1){
-            return companyService.getAllCompanies();
+    public Page getCompaniesByPage(@PageableDefault() Pageable pageable,@RequestParam(defaultValue = "false") boolean unpaged) {
+        if (unpaged){
+            return companyService.getAllCompanies(Pageable.unpaged());
         }
-        return companyService.getCompaniesInSpecificPage(page, pageSize);
+        return companyService.getAllCompanies(pageable);
     }
 
     @PutMapping(path = "/companies/{id}")

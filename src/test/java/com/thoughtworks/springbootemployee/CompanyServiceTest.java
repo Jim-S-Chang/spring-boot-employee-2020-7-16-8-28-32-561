@@ -24,19 +24,4 @@ public class CompanyServiceTest {
     @Mock
     private CompanyRepository companyRepository;
 
-    @Test
-    public void should_return_2_companies_when_get_companies_given_2_companies(){
-        //given
-        List<Company> givenCompanies = new ArrayList<>();
-        givenCompanies.add(new Company());
-        givenCompanies.add(new Company());
-
-        Mockito.when(companyRepository.findAll()).thenReturn(givenCompanies);
-
-        //when
-        List<Company> result = companyServiceImp.getAllCompanies();
-
-        //then
-        Assertions.assertEquals(2,result.size());
-    }
 }

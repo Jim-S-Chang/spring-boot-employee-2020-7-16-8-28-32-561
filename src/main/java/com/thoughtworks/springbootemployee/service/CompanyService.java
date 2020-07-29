@@ -2,6 +2,9 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +15,7 @@ public interface CompanyService {
 
     Company getCompanyById(int id);
 
-    List<Company> getAllCompanies();
-
-    List<Company> getCompaniesInSpecificPage(int page, int pageSize);
+    Page getAllCompanies(@PageableDefault Pageable pageable);
 
     boolean updateOneCompany(int id, Company company);
 

@@ -1,10 +1,23 @@
 package com.thoughtworks.springbootemployee.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int age;
     private String gender;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 
     public Employee() {
     }

@@ -18,30 +18,32 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/employees")
-    public List<Employee> getEmployees(@RequestParam(required = false, defaultValue = "-1") int page,
-                             @RequestParam(required = false, defaultValue = "-1") int pageSize,
-                             @RequestParam(required = false, defaultValue = "null") String gender) {
-        if(page!=-1){
-            return employeeService.getEmployeesByPage(page,pageSize);
-        }else if(!gender.equals("null")){
-            return employeeService.getEmployeesByGender(gender);
-        }else {
-            return employeeService.getAllEmployees();
-        }
+    public List<Employee> getEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
+    @GetMapping(path = "/employees", params = "gender")
+    public List<Employee> getEmployees(@RequestParam String gender) {
+        return employeeService.getEmployeesByGender(gender);
+    }
+
+    @GetMapping(path = "/employees", params = "page, pageSize")
+    public List<Employee> getEmployees(@RequestParam int page, int pageSize) {
+        return employeeService.getEmployeesByPage(page, pageSize);
     }
 
     @GetMapping(path = "/employees/{id}")
-    public Employee getSpecificEmployeeById(@PathVariable int id){
+    public Employee getSpecificEmployeeById(@PathVariable int id) {
         return employeeService.getSpecificEmployeeById(id);
     }
 
     @PutMapping(path = "/employees/{id}")
-    public boolean updateEmployeeById(@RequestBody Employee employee,@PathVariable int id){
-        return employeeService.updateEmployeeById(employee,id);
+    public boolean updateEmployeeById(@RequestBody Employee employee, @PathVariable int id) {
+        return employeeService.updateEmployeeById(employee, id);
     }
 
     @DeleteMapping(path = "/employees/{id}")
-    public boolean deleteEmployeeById(@PathVariable int id){
+    public boolean deleteEmployeeById(@PathVariable int id) {
         return employeeService.deleteEmployeeById(id);
     }
 }

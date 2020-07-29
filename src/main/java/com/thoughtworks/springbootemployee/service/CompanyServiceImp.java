@@ -4,48 +4,53 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CompanyServiceImp implements CompanyService{
-    @Autowired
+public class CompanyServiceImp implements CompanyService {
+
     private CompanyRepository companyRepository;
+
+    public CompanyServiceImp(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+    }
 
     @Override
     public Company getCompanyById(int id) {
-        return null;
+        return companyRepository.findById(id);
     }
 
     @Override
-    public List<Company> getAllCompanies() {
-        return companyRepository.findAll();
-    }
-
-    @Override
-    public List<Company> getCompaniesInSpecificPage(int page, int pageSize) {
-        return null;
+    public Page getAllCompanies(@PageableDefault Pageable pageable) {
+        return companyRepository.findAll(pageable);
     }
 
     @Override
     public boolean updateOneCompany(int id, Company company) {
-        return false;
+        company.setId(id);
+        companyRepository.save(company);
+        return true;
     }
 
     @Override
     public boolean deleteEmployeesInSpecificCompany(int id) {
-        return false;
+        companyRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public List<Employee> getAllEmployeesInSpecificCompany(int id) {
-        return null;
+        return companyRepository.findById(id).getEmployees();
     }
 
     @Override
     public boolean addCompany(Company company) {
-        return false;
+        companyRepository.save(company);
+        return true;
     }
 }

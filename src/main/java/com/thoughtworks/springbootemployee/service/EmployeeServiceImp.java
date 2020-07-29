@@ -10,8 +10,11 @@ import java.util.List;
 @Service
 public class EmployeeServiceImp implements EmployeeService{
 
-    @Autowired
     private EmployeeRepository employeeRepository;
+
+    public EmployeeServiceImp(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     @Override
     public boolean addEmployee(Employee employee) {
@@ -25,7 +28,7 @@ public class EmployeeServiceImp implements EmployeeService{
 
     @Override
     public List<Employee> getEmployeesByGender(String gender) {
-        return null;
+        return employeeRepository.findByGender(gender);
     }
 
     @Override
@@ -45,6 +48,6 @@ public class EmployeeServiceImp implements EmployeeService{
 
     @Override
     public List<Employee> getAllEmployees() {
-        return null;
+        return employeeRepository.findAll();
     }
 }
