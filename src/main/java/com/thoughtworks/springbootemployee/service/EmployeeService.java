@@ -1,11 +1,12 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.EmployeeDTO;
 import com.thoughtworks.springbootemployee.entity.Employee;
 
 import java.util.List;
 
 public interface EmployeeService {
-    boolean addEmployee(Employee employee);
+    boolean addEmployee(EmployeeDTO employeeDTO);
 
     List<Employee> getEmployeesByPage(int page, int pageSize);
 
@@ -13,7 +14,7 @@ public interface EmployeeService {
 
     Employee getSpecificEmployeeById(int id);
 
-    boolean updateEmployeeById(Employee employee, int id);
+    boolean updateEmployeeById(EmployeeDTO employeeDTO, int id);
 
     boolean deleteEmployeeById(int id);
 

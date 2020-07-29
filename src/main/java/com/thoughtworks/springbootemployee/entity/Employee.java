@@ -22,6 +22,16 @@ public class Employee {
     public Employee() {
     }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Employee(int age, String gender, String name) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
