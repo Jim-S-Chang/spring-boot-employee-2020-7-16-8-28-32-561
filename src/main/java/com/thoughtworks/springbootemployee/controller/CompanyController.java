@@ -1,14 +1,18 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.entity.Company;
+import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class CompanyController {
-    CompanyService companyService = new CompanyService();
+    @Autowired
+    private CompanyService companyService;
+
     @GetMapping(path = "/companies/{id}")
     public Company getSpecificCompany(@PathVariable int id) {
 
@@ -20,11 +24,7 @@ public class CompanyController {
         return companyService.addCompany(company);
     }
 
-//    @GetMapping(path = "/companies")
-//    public List getAllCompanies() {
-//        return companyService.getAllCompanies();
-//    }
-
+    // todo
     @GetMapping(path = "/companies")
     public List<Company> getCompaniesByPage(
             @RequestParam(required = false, defaultValue = "-1") int page,
@@ -46,7 +46,7 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/companies/{id}/employees")
-    public List getAllEmployeesInSpecificCompany(@PathVariable int id) {
+    public List<Employee> getAllEmployeesInSpecificCompany(@PathVariable int id) {
         return companyService.getAllEmployeesInSpecificCompany(id);
     }
 }

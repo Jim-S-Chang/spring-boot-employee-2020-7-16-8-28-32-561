@@ -2,13 +2,15 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class EmployeeController {
-    EmployeeService employeeService = new EmployeeService();
+    @Autowired
+    private EmployeeService employeeService;
 
     @PostMapping(path = "/employees")
     public boolean addEmployee(@RequestBody Employee employee) {
@@ -16,7 +18,7 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/employees")
-    public List getEmployees(@RequestParam(required = false, defaultValue = "-1") int page,
+    public List<Employee> getEmployees(@RequestParam(required = false, defaultValue = "-1") int page,
                              @RequestParam(required = false, defaultValue = "-1") int pageSize,
                              @RequestParam(required = false, defaultValue = "null") String gender) {
         if(page!=-1){
